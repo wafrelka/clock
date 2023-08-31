@@ -1,0 +1,36 @@
+<html>
+    <script>
+        const format = (num, width) => num.toString().padStart(width, "0");
+        const update = () => {
+            const now = new Date();
+            const values = {
+                year: format(now.getFullYear(), 4),
+                month: format(now.getMonth() + 1, 2),
+                day: format(now.getDate(), 2),
+                hours: format(now.getHours(), 2),
+                minutes: format(now.getMinutes(), 2),
+                seconds: format(now.getSeconds(), 2),
+            };
+            for(const [k, v] of Object.entries(values)) {
+                document.getElementById(k).textContent = v;
+            }
+            return now;
+        };
+        const set = () => {
+            const now = update();
+            const delta = 1000 - now.getMilliseconds() + 10;
+            setTimeout(set, delta);
+        }
+        document.addEventListener("DOMContentLoaded", set);
+    </script>
+    <style>
+        #date, #time { color: white; }
+        #date { font-size: 0.9rem; color: lightgray; }
+        #time { font-size: 1.6rem; position:relative; top: -0.5rem; left: -0.07rem; }
+        html { background-color: black; font-size: 50px; }
+    </style>
+    <body>
+        <div id="date"><span id="year"></span>/<span id="month"></span>/<span id="day"></span></div>
+        <div id="time"><span id="hours"></span>:<span id="minutes"></span>:<span id="seconds"></span></div>
+    </body>
+</html>
